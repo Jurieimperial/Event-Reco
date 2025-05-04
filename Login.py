@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 from Homepage import Homepage
-
+from CreateAcc import CreateAcc  # Assuming CreateAcc is a class
 
 class LoginSystem:
     def __init__(self, root):
@@ -14,23 +14,22 @@ class LoginSystem:
         self.create_widgets()
 
     def create_widgets(self):
-        # Load and display logo at the top left corner
+        # Load and display logo
         try:
             self.logo_image = Image.open(
                 r"C:\Users\jurie qt\Desktop\Reco\python\494571200_698141445951733_3348868030050292808_n.jpg")
             self.logo_image = self.logo_image.resize((100, 60))
             self.logo = ImageTk.PhotoImage(self.logo_image)
-
             self.logo_label = tk.Label(self.root, image=self.logo, bg="#add8e6")
             self.logo_label.place(x=20, y=20)
         except Exception as e:
             print(f"Error loading logo: {e}")
 
         # Greeting (left side)
-        self.greeting_label = tk.Label(self.root, text="Good day Pupians!!", font=("Arial", 14), bg="#add8e6")
-        self.greeting_label.place(x=50, y=150)
+        self.greeting_label = tk.Label(self.root, text="Good Day Pupians!", font=("Times new roman", 30), bg="#add8e6")
+        self.greeting_label.place(x=70, y=150)
 
-        # Login form (right side)
+        # Login Frame
         self.login_frame = tk.Frame(self.root, bg="white", highlightbackground="#8a1538", highlightthickness=2)
         self.login_frame.place(x=450, y=50, width=300, height=300)
 
@@ -80,18 +79,19 @@ class LoginSystem:
             messagebox.showerror("Login Failed", "Please enter both username and password.")
 
     def open_homepage(self, username):
-        # Close login window and open homepage
         self.root.destroy()
         homepage_window = tk.Tk()
-        Homepage(homepage_window, username)  # Ensure Homepage class takes these two arguments
+        Homepage(homepage_window, username)
         homepage_window.mainloop()
+
+    def create_account(self):
+        self.root.destroy()
+        create_account_window = tk.Tk()
+        CreateAcc(create_account_window)  # Correct class instantiation
+        create_account_window.mainloop()
 
     def forgot_password(self, event=None):
         messagebox.showinfo("Forgot Password", "Redirecting to password recovery...")
-
-    def create_account(self):
-        messagebox.showinfo("Create Account", "Redirecting to create account...")
-
 
 if __name__ == "__main__":
     login_window = tk.Tk()

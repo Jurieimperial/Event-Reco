@@ -7,25 +7,38 @@ class Homepage:
         self.root = root
         self.username = username
         self.root.title("Personalized Event Recommendations")
-        self.root.geometry("800x400")
-        self.root.configure(bg="white")
+        self.root.geometry("800x500")
+        self.root.configure(bg="#f9f9f9")  # Light neutral background
 
         self.create_widgets()
 
     def create_widgets(self):
-        # Welcome Message
-        welcome_label = tk.Label(self.root, text=f"Welcome, {self.username}!",
-                                 font=("Arial", 18, "bold"), fg="#8a1538", bg="white")
-        welcome_label.pack(pady=50)
+        # Top Frame
+        top_frame = tk.Frame(self.root, bg="#8a1538", height=80)
+        top_frame.pack(fill="x")
 
-        # Personalized Event Recommendations
-        events = self.get_personalized_events(self.username)  # This function gets events for the user
-        self.show_event_recommendations(events)
+        welcome_label = tk.Label(top_frame, text=f"Welcome, {self.username}!",
+                                 font=("Arial", 18, "bold"), fg="white", bg="#8a1538")
+        welcome_label.pack(pady=20)
+
+        # Main Content Frame
+        content_frame = tk.Frame(self.root, bg="white", highlightbackground="#8a1538", highlightthickness=2)
+        content_frame.place(relx=0.5, rely=0.5, anchor="center", width=600, height=300)
+
+        events_label = tk.Label(content_frame, text="🎉 Recommended Events for You:",
+                                font=("Arial", 14, "bold"), bg="white", fg="#8a1538")
+        events_label.pack(pady=(20, 10))
+
+        # Show Event Recommendations
+        events = self.get_personalized_events(self.username)
+        for event in events:
+            event_label = tk.Label(content_frame, text=f"• {event}", font=("Arial", 12), bg="white", anchor="w")
+            event_label.pack(pady=3, padx=20, anchor="w")
 
         # Log Out Button
-        logout_button = tk.Button(self.root, text="Log Out", bg="#8a1538", fg="white",
-                                  font=("Arial", 12), command=self.logout)
-        logout_button.pack(pady=10)
+        logout_button = tk.Button(self.root, text="Log Out", bg="#8a1538", fg="white", font=("Arial", 12),
+                                  padx=20, pady=5, command=self.logout, relief="flat")
+        logout_button.place(relx=0.9, rely=0.92, anchor="se")
 
     def get_personalized_events(self, username):
         # This method should fetch the user's event preferences from a database or recommendation model
@@ -37,17 +50,9 @@ class Homepage:
             "AI Workshop - May 22nd"
         ]
 
-    def show_event_recommendations(self, events):
-        events_label = tk.Label(self.root, text="Recommended Events for You:", font=("Arial", 14), bg="white")
-        events_label.pack(pady=10)
-
-        for event in events:
-            event_label = tk.Label(self.root, text=event, font=("Arial", 12), bg="white")
-            event_label.pack(pady=5)
-
     def logout(self):
         self.root.destroy()  # Close the homepage window
         from Login import LoginSystem  # Import LoginSystem from login_system.py
         login_window = tk.Tk()
-        LoginSystem(login_window)  # Recreate the login window
+        LoginSystem(login_window)
         login_window.mainloop()
