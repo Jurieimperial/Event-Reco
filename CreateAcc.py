@@ -1,35 +1,30 @@
 import tkinter as tk
 from tkinter import messagebox
-from PIL import Image, ImageTk  # Make sure to import this for handling images
+from PIL import Image, ImageTk
 
 class CreateAcc:
     def __init__(self, root):
         self.root = root
         self.root.title("PUP Login System")
         self.root.geometry("800x400")
-        self.root.configure(bg="#add8e6")  # Light blue background
-
+        self.root.configure(bg="#add8e6")
         self.create_widgets()
 
     def create_widgets(self):
-        # Load and display logo at the top left corner
         try:
             self.logo_image = Image.open(
                 r"C:\Users\jurie qt\Desktop\Reco\python\494571200_698141445951733_3348868030050292808_n.jpg")
             self.logo_image = self.logo_image.resize((100, 60))
             self.logo = ImageTk.PhotoImage(self.logo_image)
-
             self.logo_label = tk.Label(self.root, image=self.logo, bg="#add8e6")
             self.logo_label.place(x=20, y=20)
         except Exception as e:
             print(f"Error loading logo: {e}")
 
-        # Center the login frame in the window
         frame_width = 300
         frame_height = 380
         window_width = 800
         window_height = 400
-
         x_pos = (window_width - frame_width) // 2
         y_pos = (window_height - frame_height) // 2
 
@@ -77,8 +72,7 @@ class CreateAcc:
         self.create_acc_button.pack(pady=10)
 
     def back_button(self):
-        self.back_button = tk.Button(self.login_frame, text="Back", bg="#f5b942", fg="black",
-                                           command=self.back)
+        self.back_button = tk.Button(self.login_frame, text="Back", bg="#87CEFA", fg="black", command=self.back)
         self.back_button.pack(pady=10)
 
     def create_account(self):
@@ -95,10 +89,8 @@ class CreateAcc:
             messagebox.showerror("Error", "Passwords do not match.")
             return
 
-        # Simulate saving account (here you'd save to file or database)
         messagebox.showinfo("Success", f"Account for '{username}' has been created!")
 
-        # Optional: open homepage or go back to login
         self.root.destroy()
         from Login import LoginSystem
         login_window = tk.Tk()
@@ -107,9 +99,13 @@ class CreateAcc:
 
     def back(self):
         self.root.destroy()
-        from Login import LoginSystem  # Ensure Login.py exists
+        from Login import LoginSystem
         login_window = tk.Tk()
         LoginSystem(login_window)
         login_window.mainloop()
 
 
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = CreateAcc(root)
+    root.mainloop()
