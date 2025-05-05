@@ -12,8 +12,7 @@ class CreateAcc:
 
     def create_widgets(self):
         try:
-            self.logo_image = Image.open(
-                r"C:\Users\jurie qt\Desktop\Reco\python\494571200_698141445951733_3348868030050292808_n.jpg")
+            self.logo_image = Image.open("images/494571200_698141445951733_3348868030050292808_n.jpg")
             self.logo_image = self.logo_image.resize((100, 60))
             self.logo = ImageTk.PhotoImage(self.logo_image)
             self.logo_label = tk.Label(self.root, image=self.logo, bg="#add8e6")
